@@ -269,6 +269,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <CallingConvention>VectorCall</CallingConvention>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>CPUExtensionRequirementsARMv82</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -291,6 +292,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <CallingConvention>VectorCall</CallingConvention>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <EnableEnhancedInstructionSet>CPUExtensionRequirementsARMv82</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
