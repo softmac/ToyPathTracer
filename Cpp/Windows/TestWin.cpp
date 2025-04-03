@@ -248,7 +248,7 @@ static int s_Count;
 static char s_Buffer[200];
 static unsigned s_Flags = kFlagProgressive | kFlagAnimate;
 static int s_FrameCount = 0;
-static bool s_TraceGPU = true;
+static bool s_TraceGPU = false;
 
 static void RenderFrameGPU()
 {

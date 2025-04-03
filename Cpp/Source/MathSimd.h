@@ -12,9 +12,7 @@
 
 // ---- SSE implementation
 
-#include <xmmintrin.h>
-#include <emmintrin.h>
-#include <smmintrin.h>
+#include <intrin.h>
 
 #define SHUFFLE4(V, X,Y,Z,W) float4(_mm_shuffle_ps((V).m, (V).m, _MM_SHUFFLE(W,Z,Y,X)))
 
