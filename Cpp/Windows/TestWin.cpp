@@ -1,6 +1,13 @@
 #include <stdint.h>
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
+#if defined _M_ARM64
+// enables native ARM64 softintrinsics and pulls in the necessary LIBs
+// (for ARM64EC builds this is done automatically)
+#define USE_SOFT_INTRINSICS
+#pragma comment(linker, "/defaultlib:ntdll")
+#pragma comment(linker, "/defaultlib:softintrin")
+#endif
 #include <windows.h>
 #include <d3d11_1.h>
 
@@ -321,7 +328,7 @@ static void RenderFrameCPU()
     uint64_t dt = time2.QuadPart - time1.QuadPart;
     ++s_Count;
     s_Time += dt;
-    if (s_Count > 10)
+    if (s_Count > 3)
     {
         LARGE_INTEGER frequency;
         QueryPerformanceFrequency(&frequency);
@@ -368,7 +375,7 @@ static void FrameTimingGPU()
         static float s_Time;
         ++s_Count;
         s_Time += s;
-        if (s_Count > 150)
+        if (s_Count > 15)
         {
             s = s_Time / s_Count;
             sprintf_s(s_Buffer, sizeof(s_Buffer), "GPU %.2fms (%.1f FPS) %.1fMrays/s %.2fMrays/frame frames %i [g: toggle GPU, a: toggle animation, p: toggle progressive]\n", s * 1000.0f, 1.f / s, s_RayCounter / s_Count / s * 1.0e-6f, s_RayCounter / s_Count * 1.0e-6f, s_FrameCount);

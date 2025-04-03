@@ -18,6 +18,16 @@
 
 #include <assert.h>
 
+#if defined _WIN32
+#if defined _M_ARM64
+// native Windows on ARM build requires manually setting this define
+#define USE_SOFT_INTRINSICS
+#endif
+
+// for _mm_pause
+#include <intrin.h>
+#endif
+
 #include "TaskScheduler.h"
 #include "LockLessMultiReadPipe.h"
 
@@ -69,8 +79,7 @@ namespace
 	}
 
 	#if defined _WIN32
-		#if defined _M_IX86  || defined _M_X64
-			#pragma intrinsic(_mm_pause)
+		#if defined _M_IX86  || defined _M_X64 || defined _M_ARM64
 			inline void Pause() { _mm_pause(); }
 		#endif
 	#elif defined __i386__ || defined __x86_64__

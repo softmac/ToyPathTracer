@@ -12,9 +12,14 @@
 
 // ---- SSE implementation
 
-#include <xmmintrin.h>
-#include <emmintrin.h>
-#include <smmintrin.h>
+#if _M_ARM64
+// enables native ARM64 softintrinsics and pulls in the necessary LIBs
+// (for ARM64EC builds this is done automatically)
+#define USE_SOFT_INTRINSICS
+#pragma comment(linker, "/defaultlib:ntdll")
+#pragma comment(linker, "/defaultlib:softintrin")
+#endif
+#include <intrin.h>
 
 #define SHUFFLE4(V, X,Y,Z,W) float4(_mm_shuffle_ps((V).m, (V).m, _MM_SHUFFLE(W,Z,Y,X)))
 
