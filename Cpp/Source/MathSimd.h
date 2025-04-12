@@ -12,9 +12,7 @@
 
 // ---- SSE implementation
 
-#include <xmmintrin.h>
-#include <emmintrin.h>
-#include <smmintrin.h>
+#include <intrin.h>
 
 #define SHUFFLE4(V, X,Y,Z,W) float4(_mm_shuffle_ps((V).m, (V).m, _MM_SHUFFLE(W,Z,Y,X)))
 
@@ -25,12 +23,12 @@ struct float4
     VM_INLINE explicit float4(float x, float y, float z, float w) { m = _mm_set_ps(w, z, y, x); }
     VM_INLINE explicit float4(float v) { m = _mm_set_ps1(v); }
     VM_INLINE explicit float4(__m128 v) { m = v; }
-    
+
     VM_INLINE float getX() const { return _mm_cvtss_f32(m); }
     VM_INLINE float getY() const { return _mm_cvtss_f32(_mm_shuffle_ps(m, m, _MM_SHUFFLE(1, 1, 1, 1))); }
     VM_INLINE float getZ() const { return _mm_cvtss_f32(_mm_shuffle_ps(m, m, _MM_SHUFFLE(2, 2, 2, 2))); }
     VM_INLINE float getW() const { return _mm_cvtss_f32(_mm_shuffle_ps(m, m, _MM_SHUFFLE(3, 3, 3, 3))); }
-    
+
     __m128 m;
 };
 
@@ -105,12 +103,12 @@ struct float4
     VM_INLINE explicit float4(float x, float y, float z, float w) { float v[4] = {x, y, z, w}; m = vld1q_f32(v); }
     VM_INLINE explicit float4(float v) { m = vdupq_n_f32(v); }
     VM_INLINE explicit float4(float32x4_t v) { m = v; }
-    
+
     VM_INLINE float getX() const { return vgetq_lane_f32(m, 0); }
     VM_INLINE float getY() const { return vgetq_lane_f32(m, 1); }
     VM_INLINE float getZ() const { return vgetq_lane_f32(m, 2); }
     VM_INLINE float getW() const { return vgetq_lane_f32(m, 3); }
-    
+
     float32x4_t m;
 };
 
